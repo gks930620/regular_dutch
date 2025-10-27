@@ -1,3 +1,15 @@
+// groovy
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // AGP 버전을 8.3.0으로 업그레이드
+        classpath 'com.android.tools.build:gradle:8.3.0'
+    }
+}
+
 allprojects {
     repositories {
         google()

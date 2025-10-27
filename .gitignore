@@ -44,7 +44,7 @@ app.*.map.json
 
 
 .env
-참고.txt
+참고파일들/참고.txt
 
 /android/key.properties
 *.jks
