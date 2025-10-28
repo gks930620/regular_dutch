@@ -1,0 +1,47 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram name="ERD" id="erd">
+    <mxGraphModel dx="1106" dy="713" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="Regular Dutch App - ERD" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=48;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="450" y="30" width="500" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b style=&quot;background-color: initial&quot;&gt;&lt;font style=&quot;font-size: 28px&quot;&gt;groups&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Columns&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;🔑 id : INTEGER (PK)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&amp;nbsp; &amp;nbsp; name : TEXT (NOT NULL)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;fontSize=24;" parent="1" vertex="1">
+          <mxGeometry x="560" y="250" width="460" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="20" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b style=&quot;font-size: 28px&quot;&gt;members&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Columns&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;🔑 id : INTEGER (PK)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;🔗 group_id : INTEGER (FK)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&amp;nbsp; &amp;nbsp; name : TEXT&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E2F0FF;strokeColor=#5B9BD5;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;fontSize=24;" parent="1" vertex="1">
+          <mxGeometry x="40" y="120" width="460" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="30" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b style=&quot;font-size: 28px&quot;&gt;payments&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Columns&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;🔑 id : INTEGER (PK)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;🔗 group_id : INTEGER (FK)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&amp;nbsp; &amp;nbsp; date : TEXT (yyyy-MM-dd)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&amp;nbsp; &amp;nbsp; member : TEXT&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6E6;strokeColor=#D9534F;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;fontSize=24;" parent="1" vertex="1">
+          <mxGeometry x="40" y="420" width="500" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="40" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b style=&quot;font-size: 28px&quot;&gt;holidays&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Columns&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;🔑 holiday_date : TEXT (PK)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&amp;nbsp; &amp;nbsp; name : TEXT&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&amp;nbsp; &amp;nbsp; last_updated : INTEGER&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;i&gt;&lt;font color=&quot;#666666&quot;&gt;독립 테이블 (FK 없음)&lt;/font&gt;&lt;/i&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6FFE6;strokeColor=#3C9A4D;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;fontSize=24;" parent="1" vertex="1">
+          <mxGeometry x="1080" y="250" width="540" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="50" value="" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#5B9BD5;" parent="1" source="20" target="10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="51" value="1 : N&lt;br&gt;(ON DELETE CASCADE)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=22;fontColor=#5B9BD5;fontStyle=1;labelBackgroundColor=#ffffff;" parent="50" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint x="5" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="60" value="" style="endArrow=ERmany;startArrow=ERone;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#D9534F;" parent="1" source="30" target="10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="61" value="1 : N&lt;br&gt;(ON DELETE CASCADE)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=22;fontColor=#D9534F;fontStyle=1;labelBackgroundColor=#ffffff;" parent="60" vertex="1" connectable="0">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint x="5" y="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="70" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;📖 ERD Legend&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left&quot;&gt;🔑 Primary Key (PK)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;🔗 Foreign Key (FK)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Relationships:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;• members.group_id → groups.id&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;• payments.group_id → groups.id&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;fontSize=24;" parent="1" vertex="1">
+          <mxGeometry x="40" y="760" width="600" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="80" value="&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Database Info&lt;/b&gt;&lt;/div&gt;&lt;hr&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Type:&lt;/b&gt; SQLite (sqflite)&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;File:&lt;/b&gt; group.db&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Version:&lt;/b&gt; 2&lt;/div&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;b&gt;Foreign Keys:&lt;/b&gt; ON&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;fontSize=22;" parent="1" vertex="1">
+          <mxGeometry x="1080" y="640" width="540" height="200" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
