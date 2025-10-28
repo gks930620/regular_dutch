@@ -128,7 +128,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (context) {
+      builder: (dialogContext) {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             // 월 변경 시 일수 재계산
@@ -163,9 +163,8 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                             child: Text('$y년'),
                           )).toList(),
                           onChanged: (value) {
-                            setDialogState(() {
-                              selectedYear = value!;
-                            });
+                            selectedYear = value!;
+                            setDialogState(() {});
                           },
                         ),
                         // 월
@@ -176,9 +175,8 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                             child: Text('$m월'),
                           )).toList(),
                           onChanged: (value) {
-                            setDialogState(() {
-                              selectedMonth = value!;
-                            });
+                            selectedMonth = value!;
+                            setDialogState(() {});
                           },
                         ),
                         // 일
@@ -189,9 +187,8 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                             child: Text('$d일'),
                           )).toList(),
                           onChanged: (value) {
-                            setDialogState(() {
-                              selectedDay = value!;
-                            });
+                            selectedDay = value!;
+                            setDialogState(() {});
                           },
                         ),
                       ],
@@ -203,17 +200,38 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                     // 멤버 선택
                     Text('멤버 선택', style: TextStyle(fontWeight: FontWeight.bold)),
                     SizedBox(height: 8),
-                    ..._members.map((member) => RadioListTile<String>(
-                      dense: true,
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(member),
-                      value: member,
-                      groupValue: selectedMember,
-                      onChanged: (value) {
-                        setDialogState(() {
-                          selectedMember = value;
-                        });
+                    ..._members.map((member) => InkWell(
+                      onTap: () {
+                        selectedMember = member;
+                        setDialogState(() {});
                       },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: selectedMember == member ? Colors.blue.shade50 : null,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              selectedMember == member
+                                  ? Icons.radio_button_checked
+                                  : Icons.radio_button_unchecked,
+                              color: selectedMember == member ? Colors.blue : Colors.grey,
+                            ),
+                            SizedBox(width: 12),
+                            Text(
+                              member,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: selectedMember == member
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     )),
                     SizedBox(height: 16),
 
@@ -289,7 +307,10 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
       }
     }
 
-    reasonController.dispose();
+    // TextField와 키보드가 완전히 정리된 후 controller dispose
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      reasonController.dispose();
+    });
   }
 
   // 날짜 클릭 시 실행되는 콜백
@@ -301,148 +322,135 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
 
     // 멤버 선택 다이얼로그 표시
     final TextEditingController _customNameController = TextEditingController();
-    String? selectedMemberName; // 현재 선택된 멤버
 
     final result = await showDialog<String>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) => AlertDialog(
-            title: Text("${normalized.year}-${normalized.month}-${normalized.day} 계산자 선택"),
-            contentPadding: EdgeInsets.fromLTRB(24, 20, 24, 0),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 기존 결제자가 있으면 현재 상태 표시
-                  if (existingMember != null) ...[
-                    Text(
-                      '현재: $existingMember',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                        fontSize: 16,
-                      ),
+        String? selectedMemberName; // 로컬 변수로 관리
+
+        return AlertDialog(
+          title: Text("${normalized.year}-${normalized.month}-${normalized.day} 계산자 선택"),
+          contentPadding: EdgeInsets.fromLTRB(24, 20, 24, 0),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 기존 결제자가 있으면 현재 상태 표시
+                if (existingMember != null) ...[
+                  Text(
+                    '현재: $existingMember',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                      fontSize: 16,
                     ),
-                    SizedBox(height: 12),
-                    Divider(),
-                    SizedBox(height: 8),
-                  ],
-
-                  // 멤버 목록 (라디오 버튼)
-                  Text('멤버 선택', style: TextStyle(fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
-                  ..._members.map((member) => RadioListTile<String>(
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(member),
-                    value: member,
-                    groupValue: selectedMemberName,
-                    onChanged: (value) {
-                      setDialogState(() {
-                        selectedMemberName = value;
-                      });
-                      _customNameController.clear();
-                    },
-                  )),
-
-                  SizedBox(height: 16),
+                  ),
+                  SizedBox(height: 12),
                   Divider(),
                   SizedBox(height: 8),
+                ],
 
-                  // 직접 입력
-                  Text('직접 입력', style: TextStyle(fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
-                  TextField(
-                    controller: _customNameController,
-                    maxLength: 15,
-                    onTap: () {
-                      // TextField 탭 시에만 라디오 버튼 선택 해제
-                      if (selectedMemberName != null) {
-                        setDialogState(() {
-                          selectedMemberName = null;
-                        });
-                      }
-                    },
-                    decoration: InputDecoration(
-                      hintText: '이름 입력',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                // 멤버 목록 (SimpleDialogOption으로 변경)
+                Text('멤버 선택', style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 8),
+                ..._members.map((member) => InkWell(
+                  onTap: () {
+                    Navigator.pop(context, member);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                    child: Text(
+                      member,
+                      style: TextStyle(fontSize: 16),
                     ),
                   ),
-                ],
-              ),
+                )),
+
+                SizedBox(height: 16),
+                Divider(),
+                SizedBox(height: 8),
+
+                // 직접 입력
+                Text('직접 입력', style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 8),
+                TextField(
+                  controller: _customNameController,
+                  maxLength: 15,
+                  decoration: InputDecoration(
+                    hintText: '이름 입력',
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  ),
+                ),
+              ],
             ),
-            actions: [
-              // 하단 버튼 배치: 왼쪽에 선택, 오른쪽에 삭제 또는 취소
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // 왼쪽: 선택 버튼
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // 직접 입력이 있으면 우선
-                      final customInput = _customNameController.text.trim();
-                      if (customInput.isNotEmpty) {
-                        Navigator.pop(context, customInput);
-                      } else if (selectedMemberName != null) {
-                        Navigator.pop(context, selectedMemberName);
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('멤버를 선택하거나 이름을 입력해주세요')),
-                        );
+          ),
+          actions: [
+            // 하단 버튼 배치
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // 왼쪽: 직접 입력으로 선택 버튼
+                ElevatedButton.icon(
+                  onPressed: () {
+                    final customInput = _customNameController.text.trim();
+                    if (customInput.isNotEmpty) {
+                      Navigator.pop(context, customInput);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('이름을 입력해주세요')),
+                      );
+                    }
+                  },
+                  icon: Icon(Icons.check),
+                  label: Text('입력'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+
+                // 오른쪽: 삭제 또는 취소 버튼
+                if (existingMember != null)
+                  OutlinedButton.icon(
+                    onPressed: () async {
+                      // 삭제 확인 다이얼로그
+                      final confirm = await showDialog<bool>(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          title: Text('삭제 확인'),
+                          content: Text('${normalized.year}-${normalized.month}-${normalized.day} 결제 기록을 삭제하시겠습니까?'),
+                          actions: [
+                            TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('취소')),
+                            ElevatedButton(
+                              onPressed: () => Navigator.pop(ctx, true),
+                              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                              child: Text('삭제'),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      if (confirm == true) {
+                        Navigator.pop(context, '__DELETE__');
                       }
                     },
-                    icon: Icon(Icons.check),
-                    label: Text('선택'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
+                    icon: Icon(Icons.delete, color: Colors.red),
+                    label: Text('삭제', style: TextStyle(color: Colors.red)),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.red),
                     ),
+                  )
+                else
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, null),
+                    child: Text('취소'),
                   ),
-
-                  // 오른쪽: 삭제 또는 취소 버튼
-                  if (existingMember != null)
-                    OutlinedButton.icon(
-                      onPressed: () async {
-                        // 삭제 확인 다이얼로그
-                        final confirm = await showDialog<bool>(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            title: Text('삭제 확인'),
-                            content: Text('${normalized.year}-${normalized.month}-${normalized.day} 결제 기록을 삭제하시겠습니까?'),
-                            actions: [
-                              TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('취소')),
-                              ElevatedButton(
-                                onPressed: () => Navigator.pop(ctx, true),
-                                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                                child: Text('삭제'),
-                              ),
-                            ],
-                          ),
-                        );
-
-                        if (confirm == true) {
-                          Navigator.pop(context, '__DELETE__');
-                        }
-                      },
-                      icon: Icon(Icons.delete, color: Colors.red),
-                      label: Text('삭제', style: TextStyle(color: Colors.red)),
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.red),
-                      ),
-                    )
-                  else
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, null),
-                      child: Text('취소'),
-                    ),
-                ],
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         );
       },
     );
@@ -607,13 +615,15 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
     //detail 화면 들어가기전에 잠깐 에러나고 가네... 이거 확인하자.. minCount 다음결제자 하면서 생김 
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('📋 $_groupName'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
             // 멤버 목록 헤더와 특별 결제 버튼
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -750,6 +760,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               ),
             ),
           ],
+        ),
         ),
       ),
     );
