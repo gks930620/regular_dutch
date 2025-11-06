@@ -13,7 +13,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.changhee.regular_dutch" // 이건 맞게 수정함
+    namespace = "com.changhee.regular_dutch" // 이건 맞음. AndoridManifest.xml 참고
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 

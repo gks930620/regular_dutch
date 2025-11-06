@@ -2,8 +2,9 @@ name: regular_dutch
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+7
+version: 1.0.0+8
 
+  
 environment:
   sdk: ^3.5.3
 
@@ -20,6 +21,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.13.1  # 이 줄 추가
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/icon.png"
+
+
+
 flutter:
   uses-material-design: true
   assets:

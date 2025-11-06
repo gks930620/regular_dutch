@@ -330,7 +330,18 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
         String? selectedMemberName; // 로컬 변수로 관리
 
         return AlertDialog(
-          title: Text("${normalized.year}-${normalized.month}-${normalized.day} 계산자 선택"),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("${normalized.year}-${normalized.month}-${normalized.day}"),
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () => Navigator.pop(context, null),
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+              ),
+            ],
+          ),
           contentPadding: EdgeInsets.fromLTRB(24, 20, 24, 0),
           content: SingleChildScrollView(
             child: Column(

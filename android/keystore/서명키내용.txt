@@ -1,0 +1,27 @@
+별칭 이름: your-key-alias
+생성 날짜: 2025. 10. 30.
+항목 유형: PrivateKeyEntry
+인증서 체인 길이: 1
+인증서[1]:
+소유자: CN=HANCHANGHEE, OU=regular_dutch, O=regular_dutch, L=SEOUL, ST=SEOUL, C=81
+발행자: CN=HANCHANGHEE, OU=regular_dutch, O=regular_dutch, L=SEOUL, ST=SEOUL, C=81
+일련 번호: 33454d501bde6984
+적합한 시작 날짜: Thu Oct 30 10:34:17 KST 2025 종료 날짜: Mon Mar 17 10:34:17 KST 2053
+인증서 지문:
+         SHA1: 9D:F3:0B:76:B6:B7:1C:B7:ED:52:04:64:1A:8D:D3:60:E2:87:7A:9A
+         SHA256: 88:04:7B:4A:FE:01:56:55:28:EE:0C:1F:C0:D2:8E:BE:B1:76:A7:EF:7E:D2:5C:96:6D:1F:E8:48:F2:57:27:F4
+서명 알고리즘 이름: SHA256withRSA
+주체 공용 키 알고리즘: 2048비트 RSA 키
+버전: 3
+
+확장:
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: FB 0F 0A 10 72 08 11 2A   CE 3C CB 9E D8 C5 38 42  ....r..*.<....8B
+0010: F1 8C C0 14                                        ....
+]
+]
+
+

@@ -146,6 +146,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // debug 배너 숨김
       title: '그룹 멤버 등록 앱',
       theme: ThemeData(primarySwatch: Colors.purple),
       home: PostListScreen(), // 첫 진입화면
